@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "626377816003",
+    "project_id": "aqualotl",
+    "storage_bucket": "aqualotl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626377816003:android:66f451bb165f286913af76",
+        "android_client_info": {
+          "package_name": "com.mechanical.aqualotl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626377816003-enc5lind8vrct6i54i3l5ehlf1264em4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-o-C5zV_IePj_43pMt19cge2l-iLZd_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626377816003-enc5lind8vrct6i54i3l5ehlf1264em4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
