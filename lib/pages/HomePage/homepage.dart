@@ -1,170 +1,143 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, library_private_types_in_public_api
-
 import 'package:aqualotl/constants/colors.dart';
-import 'package:aqualotl/constants/image_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-
-class HomePage extends StatefulWidget{
-   const HomePage({Key? key}) : super(key: key);
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage>{
-  // Widget slider = SleekCircularSlider(
-  //             appearance: CircularSliderAppearance(
-  //               startAngle: 90,
-  //               customWidths: CustomSliderWidths(progressBarWidth: 10),
-  //               customColors: CustomSliderColors(
-  //                 dynamicGradient: true, 
-  //                 dotColor: Colors.transparent 
-  //                 ),
-  //               size: 340,
-  //               infoProperties: InfoProperties(
-  //                 topLabelText: "Water level:",
-                  
-  //               )
-  //             ),
-  //             initialValue: 765,
-  //             max: 765,
-  //             min: 0,
-  //             onChange: (double value) {
-  //               print(value);
-  //             });
-  @override
-  Widget build(BuildContext context){
-    final litres = 765.0;
-    final trackColors = [
-      Colors.indigo.shade900,
-      Colors.blueAccent,
-      Colors.blueAccent.shade100
-    ];
-    double waterLevel = litres;
-    return  Scaffold(
-      body: Column(
-        children: [
-          // SizedBox(height: 100,),
-          // SleekCircularSlider(
-          //   max: litres,
-          //   initialValue: 0,
-          //   appearance: CircularSliderAppearance(
-          //     size: 250,
-          //     angleRange: 360,
-          //     customWidths: CustomSliderWidths(progressBarWidth: 10),
-          //     customColors: CustomSliderColors(progressBarColors: trackColors, dynamicGradient: true)
-          //   ),
-          //   min: 0,
-          //   onChange: (value) {
-          //     setState(() {
-          //       waterLevel = value;
-          //       WaterLevelBottle1(waterLevel, litres);
-          //     });
-          //     print("waterLevel = "+waterLevel.toString());
-          //   },
-          // ),
-          Center(
-            child:Stack(
-            children: [
-              Container(
-                      width: 225,
-                      height: 280,
-                      child: Image(image: AssetImage(bottleBack)),
-                    ),
-              Container(
-                width: 225,
-                height: 300,
-                  child: CustomPaint(
-                  // foregroundPainter: WaterLevelBottle1(waterLevel,litres),
-                ),
-              ),
-              Container(
-                      width: 225,
-                      height: 280,
-                      child: Image(image: AssetImage(bottleFront)),
-                    ),
-            ],
-          ),
-        ),
-         Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Slider(
-              value: waterLevel,
-              min: 0,
-              max: litres,
-              onChanged: (value) {
-                setState(() {
-                  waterLevel = value;
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            CustomPaint(
-              painter: LinePainter(waterLevel),
-              size: Size(double.infinity, 200),
-            ),
-          ],
-        ),
-      ],
-    ),        
-  );
-}
-  
-}
-  // class WaterLevelBottle1 extends CustomPainter {
-  // final double waterLevel;
-  // final double maxWaterLevel;
-  // final double maxWaterLevelHeight = 241;
-  
-
-  // WaterLevelBottle1(this.waterLevel, this.maxWaterLevel);
-  
-  // @override
-  // void paint(Canvas canvas, Size size) {
-  //   final double waterHeight = (waterLevel/maxWaterLevel) * maxWaterLevelHeight;  
-  //   final paint = Paint()
-  //   ..color = Color.fromARGB(161, 46, 109, 255)
-  //   ..strokeWidth = 5
-  //   ..style = PaintingStyle.fill;
-  //   /**
-  //    * Rounded rect
-  //    */
-  //   var aRR = Offset(size.width * 1 / 3, size.height - waterHeight - 25);
-  //   var bRR = Offset(size.width * 2 / 3, size.height * 11 / 12);
-  //   final rectangle = Rect.fromPoints(aRR, bRR);
-  //   final radius = Radius.circular(10);
-  //   canvas.drawRRect(RRect.fromRectAndRadius(rectangle, radius), paint);
-  // }
-  
-  // @override
-  // bool shouldRepaint(WaterLevelBottle1 oldDelegate) {
-  //   print("shouldRepaint = "+(oldDelegate.waterLevel != waterLevel).toString());
-  //   return oldDelegate.waterLevel != waterLevel;
-  // }
-
-  // }
-
 class LinePainter extends CustomPainter {
   final double lineLength;
-
+  final double maxLitres = 765;
+  final double maxSize = 241;
   LinePainter(this.lineLength);
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..color = Colors.blue
-      ..strokeWidth = 5;
+    Paint paintFill = Paint()
+      ..color = Color.fromRGBO(33, 150, 243, .63)
+      ..strokeWidth = 5
+      ..style = PaintingStyle.fill;
+      Paint paintFillwhite = Paint()
+      ..color = Color.fromRGBO(255, 255, 255, .4)
+      ..strokeWidth = 5
+      ..style = PaintingStyle.fill;
+      
+    Paint paintLine = Paint()
+    ..color = lAccentColor
+    ..strokeWidth = 5
+    ..style = PaintingStyle.stroke;
+    /**
+     * background lines 
+     */
+    var arc1 = Path();
+    arc1.moveTo(size.width * 1 / 4, size.height * 1.5 / 12);
+    arc1.arcToPoint(
+      Offset(size.width * 3 / 4, size.height * 1.5 / 12),
+      radius: Radius.circular(150),
+      clockwise: false,
+    );
+    canvas.drawPath(arc1, paintLine);
+    var arc2 = Path();
+    arc2.moveTo(size.width * 1 / 4, size.height * 10.8 / 12);
+    arc2.arcToPoint(
+      Offset(size.width * 3 / 4, size.height * 10.8 / 12),
+      radius: Radius.circular(150),
+      clockwise: true,
+    );
+    canvas.drawPath(arc2, paintLine);
 
-    Offset startPoint = Offset(size.width / 2 - lineLength / 2, size.height / 2);
-    Offset endPoint = Offset(size.width / 2 + lineLength / 2, size.height / 2);
+    /**
+     * recatngles
+     */
+    double waterLevel = lineLength/maxLitres * maxSize;
+    
+    Offset startPoint = Offset(size.width * 1 / 4, size.height-waterLevel-25);
+    Offset endPoint = Offset(size.width * 3 / 4, size.height * 11/12);
+    
+    var rect = Rect.fromPoints(startPoint, endPoint);
+    var rectLine = Rect.fromPoints(Offset(size.width * 1 / 4, size.height * 1.3 / 12), endPoint);
+    
+    var cap = Rect.fromPoints(
+      Offset(size.width * 4/9, size.height * 0.8 /12),
+      Offset(size.width * 5/9, size.height * 1.3/12)
+    );
 
-    canvas.drawLine(startPoint, endPoint, paint);
+    /**
+     * wave
+     */
+    var maxHeight = size.height-waterLevel-25;
+    var c = Offset(size.width * 1 / 3 + size.height * 1/24, size.height-waterLevel-25 + size.height * 1/12);
+    var c2 = Offset(size.width * 1 / 3 + size.height * 1/24, size.height-waterLevel-25 + size.height * 1/12);
+    canvas.drawCircle(c,size.width * 1 / 9, paintFill);
+    canvas.drawCircle(c2,size.width * 1 / 9, paintFill);
+    
+    canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(10)), paintFill);
+    canvas.drawRRect(RRect.fromRectAndRadius(rectLine, const Radius.circular(10)), paintLine);
+    canvas.drawRRect(RRect.fromRectAndRadius(cap, const Radius.circular(3)), paintLine);
   }
 
   @override
   bool shouldRepaint(LinePainter oldDelegate) {
     return oldDelegate.lineLength != lineLength;
+  }
+}
+
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  double _lineLength = 200;
+
+  @override
+  Widget build(BuildContext context) {
+    final litres = 765.0;
+    double userLevel = 380.0;
+    return Scaffold(
+      body: Center(
+        child: Stack(
+          children: [
+            Center(
+              child: SleekCircularSlider(
+                appearance: CircularSliderAppearance(
+                  size: 350,
+                  startAngle: 90,
+                  angleRange: 180,
+                  
+                  customWidths: CustomSliderWidths(
+                    progressBarWidth: 20,
+                  ),
+                  infoProperties: InfoProperties(
+                    mainLabelStyle: const TextStyle(
+                      fontSize: 78,
+                      fontFamily: 'TiltWarp',
+                      color: lAccentColor
+                    ),
+                    bottomLabelText: "Water",
+                    modifier: (percentage) {
+                      return percentage.toStringAsFixed(0)+" ml";
+                    },
+                  ),
+                ),
+                initialValue: userLevel,
+                min: 0,
+                max: litres,
+                onChange: (value) {
+                  print(value);
+                  setState(() {
+                    _lineLength = value;
+                  });
+                },
+              ),
+            ),
+            Center(
+              child: CustomPaint(
+                painter: LinePainter(_lineLength),
+                size: Size(225, 300),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
