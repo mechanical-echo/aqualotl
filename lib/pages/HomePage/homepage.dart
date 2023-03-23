@@ -67,6 +67,7 @@ class LinePainter extends CustomPainter {
     var c2 = Offset(size.width * 1 / 3 + size.height * 1/24, size.height-waterLevel-25 + size.height * 1/12);
     canvas.drawCircle(c,size.width * 1 / 9, paintFill);
     canvas.drawCircle(c2,size.width * 1 / 9, paintFill);
+    //if below - disappear
     
     canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(10)), paintFill);
     canvas.drawRRect(RRect.fromRectAndRadius(rectLine, const Radius.circular(10)), paintLine);
