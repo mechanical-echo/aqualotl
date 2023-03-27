@@ -1,16 +1,24 @@
-# aqualotl
+# Aqualotl :droplet: :milky_way:
+Aqualotl is an app that will help you keep track on your water everyday :droplet:.
+Aqualotl runs on flutter/dart
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## TODO list
+- [ ] All Screens
+  - [x] Splash screen
+  - [x] Login screen
+    - [ ] Forgot password
+  - [x] Signup Screen
+  - [x] Welcome Screen 
+  - [ ] Profile page
+  - [ ] Home screen
+  - [ ] Bottle Choice screen
+  - [ ] Settings screen
+  - [ ] Games screen
+- [ ] Setup database
+- [ ] Replace placeholder images with selfmade ones:
+ - [ ] Splash image
+ - [ ] Welcome image
+ - [ ] Forgot password
+ - [ ] Signup/login image
+ - [ ] Home screen images
+- [ ] Create logo
