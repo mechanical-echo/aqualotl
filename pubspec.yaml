@@ -13,11 +13,10 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^3.0.1
-  get:
-  ## ~icons~
+  get: ## ~icons~
+
   line_awesome_flutter: ^2.0.0
   cupertino_icons: ^1.0.2
-
 
   animations: ^2.0.7
   otp_text_field: ^1.1.3
@@ -34,18 +33,17 @@ flutter:
 
   uses-material-design: true
   assets:
-     - assets/images/
+    - assets/images/
   fonts:
-     - family: TiltNeon
-       fonts:
-         - asset: fonts/TiltNeon-Regular-VariableFont_XROT,YROT.ttf
-     - family: Righteous
-       fonts:
-         - asset: fonts/Righteous-Regular.ttf
-     - family: TiltWarp
-       fonts:
-         - asset: fonts/TiltWarp-Regular-VariableFont_XROT,YROT.ttf
-     
+    - family: TiltNeon
+      fonts:
+        - asset: fonts/TiltNeon-Regular-VariableFont_XROT,YROT.ttf
+    - family: Righteous
+      fonts:
+        - asset: fonts/Righteous-Regular.ttf
+    - family: TiltWarp
+      fonts:
+        - asset: fonts/TiltWarp-Regular-VariableFont_XROT,YROT.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

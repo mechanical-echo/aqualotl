@@ -40,34 +40,12 @@ class MyApp extends StatelessWidget{
           bodySmall: TextStyle(fontSize: 20, color: lSubTextColor, fontWeight: FontWeight.w300),
         ),
       ),
-      /*
-       * DARK THEME
-      darkTheme: ThemeData(
-        //brightness: Brightness.dark,
-        primaryColor: dBgColor,        
-        fontFamily: 'TiltWarp', 
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            foregroundColor: dSecondaryColor,
-          )
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: dSecondaryColor
-          )
-        ),
-        textTheme: TextTheme(
-          
-          displayLarge: TextStyle(fontSize: 55, fontWeight: FontWeight.w500, color: dAccentColor),
-          displayMedium: TextStyle(fontSize: 30, color: Colors.white70),
-        ),
-      ),
-      */
+      
       debugShowCheckedModeBanner: false,
       
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(),
+        '/': (context) => SplashScreen(),
         '/home': (context) => HomePage(),
         '/profile': (context) => ProfilePage(),
       },

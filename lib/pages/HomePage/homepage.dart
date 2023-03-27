@@ -59,16 +59,6 @@ class LinePainter extends CustomPainter {
       Offset(size.width * 5/9, size.height * 1.3/12)
     );
 
-    /**
-     * wave
-     */
-    var maxHeight = size.height-waterLevel-25;
-    var c = Offset(size.width * 1 / 3 + size.height * 1/24, size.height-waterLevel-25 + size.height * 1/12);
-    var c2 = Offset(size.width * 1 / 3 + size.height * 1/24, size.height-waterLevel-25 + size.height * 1/12);
-    canvas.drawCircle(c,size.width * 1 / 9, paintFill);
-    canvas.drawCircle(c2,size.width * 1 / 9, paintFill);
-    //if below - disappear
-    
     canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(10)), paintFill);
     canvas.drawRRect(RRect.fromRectAndRadius(rectLine, const Radius.circular(10)), paintLine);
     canvas.drawRRect(RRect.fromRectAndRadius(cap, const Radius.circular(3)), paintLine);
@@ -95,7 +85,7 @@ class _HomePageState extends State<HomePage> {
     double userLevel = 380.0;
     return Scaffold(
       body: Center(
-        child: Stack(
+        child: Stack(//
           children: [
             Center(
               child: SleekCircularSlider(
@@ -109,11 +99,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   infoProperties: InfoProperties(
                     mainLabelStyle: const TextStyle(
-                      fontSize: 78,
+                      fontSize: 30,
                       fontFamily: 'TiltWarp',
                       color: lAccentColor
                     ),
                     bottomLabelText: "Water",
+                    bottomLabelStyle: TextStyle(
+                      fontSize: 60,
+                      fontFamily: 'TiltWarp',
+                      color: lSubTextColor,
+                      ),
                     modifier: (percentage) {
                       return percentage.toStringAsFixed(0)+" ml";
                     },

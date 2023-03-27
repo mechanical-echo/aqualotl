@@ -3,11 +3,11 @@
 import 'package:aqualotl/constants/sizes.dart';
 import 'package:aqualotl/constants/strings.dart';
 import 'package:flutter/material.dart';
-
+import '../login/loginscreen.dart';
 import '../../../constants/image_strings.dart';
 import '../login/FormHeaderWidget.dart';
 import 'SignupFormWidget.dart';
-
+import 'package:get/get.dart';
 class SignupPage extends StatelessWidget{
   const SignupPage({Key? key}) : super(key: key);
   @override
@@ -38,12 +38,19 @@ class SignupPage extends StatelessWidget{
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(LoginScreen());
+                    },
                     child: Text.rich(
                       TextSpan(
                         children: [
                           TextSpan( text: "Already have an Account? ", style: Theme.of(context).textTheme.bodySmall),
-                          TextSpan( text: "Login".toUpperCase(), style: const TextStyle(color: Colors.blueAccent,fontFamily: 'TiltWarp', fontSize: 19)),
+                          TextSpan( 
+                            text: "Login".toUpperCase(), 
+                            style: const TextStyle(color: Colors.blueAccent,fontFamily: 'TiltWarp', 
+                            fontSize: 19
+                            
+                            )),
                         ]
                       )
                     )
