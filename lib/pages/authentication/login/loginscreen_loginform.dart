@@ -111,7 +111,8 @@ class LoginForm extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: (){
-                  Get.to(HomePage());
+                  // Get.to(HomePage());
+                  Navigator.pushReplacementNamed(context, '/home');
                 },
                 child: Text(login.toUpperCase()),
               ),
