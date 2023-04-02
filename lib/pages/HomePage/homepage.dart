@@ -19,25 +19,30 @@ class _HomePageState extends State<HomePage> {
   var selectedStyle = 0;
   @override
   Widget build(BuildContext context) {
-    final plain = WaterBottle(
-        key: plainBottleRef,
-        waterColor: Colors.blue.shade300,
-        bottleColor: Colors.lightBlue.shade300,
-        capColor: Colors.blueGrey.shade200);
-    final bottle = Center(
-      child: Container(
-        width: 140,
-        height: 170,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: plain,
-        ),
-      ),
-    );
+    // final plain = WaterBottle(
+    //     key: plainBottleRef,
+    //     waterColor: Colors.blue.shade300,
+    //     bottleColor: Colors.lightBlue.shade300,
+    //     capColor: Colors.blueGrey.shade200);
+    // final bottle = Center(
+    //   child: Container(
+    //     width: 140,
+    //     height: 170,
+    //     decoration: BoxDecoration(
+    //       color: Colors.grey.shade200,
+    //       borderRadius: BorderRadius.circular(10),
+    //     ),
+    //     child: Padding(
+    //       padding: const EdgeInsets.all(15),
+    //       child: plain,
+    //     ),
+    //   ),
+    // );
+    int currentWaterLevel = 1520;
+    final maxWaterLevel = 2700;
+
+    final phoneW = MediaQuery.of(context).size.width;
+    final phoneH = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -70,46 +75,87 @@ class _HomePageState extends State<HomePage> {
             /**
              * Welcome box and Bottle
              */
-            Row(
-              children: [
-                const SizedBox(width: 25),
-                /**
-                 * Welcome box
-                 */
-                Container(
-                  width: 140,
-                  height: 170,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey.shade200),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Welcome!",
-                        style: Theme.of(context).textTheme.displayMedium,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Text(
-                            "To change water level, use '+' button below the bottle",
-                            style: Theme.of(context).textTheme.bodySmall,
-                            textAlign: TextAlign.center),
-                      ),
-                    ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Row(
+                children: [
+                  /**
+                   * Welcome box
+                   */
+                  Container(
+                    //--------------------------box---------------------------
+                    width: phoneW * 0.35,
+                    height: phoneH * 0.22,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.shade200),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Welcome!",
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
+                        /**
+                         * 
+                         */
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        /**
+                         * 
+                         */
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Text(
+                              "To change water level, use '+' button below the bottle",
+                              style: Theme.of(context).textTheme.bodySmall,
+                              textAlign: TextAlign.center),
+                        ),
+                      ],
+                    ),
+                  ), //----------------------------------box-------------------------
+                  //divider
+                  const SizedBox(
+                    width: 15,
                   ),
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                bottle,
-              ],
+                  //divider
+                  Container(
+                    width: phoneH * 0.22,
+                    height: phoneH * 0.22,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.shade200),
+                    child: Padding(
+                      padding: const EdgeInsets.all(25),
+                      child: SizedBox(
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            CircularProgressIndicator(
+                              value: currentWaterLevel / maxWaterLevel,
+                              backgroundColor: Colors.grey,
+                              color: lAccentColor,
+                              strokeWidth: 15,
+                            ),
+                            Center(
+                              child: Text(
+                                ((currentWaterLevel / maxWaterLevel * 100)
+                                        .toStringAsFixed(0) +
+                                    "%"),
+                                style: Theme.of(context).textTheme.displayLarge,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 15,
@@ -164,6 +210,8 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         IconButton(
                           onPressed: () {
+                            currentWaterLevel += 500;
+                            print(currentWaterLevel);
                             showDialog(
                               context: context,
                               builder: (context) => Dialog(
