@@ -7,42 +7,45 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 import 'constants/colors.dart';
-void main(){
+
+void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget{
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  @override Widget build(BuildContext context){
+  @override
+  Widget build(BuildContext context) {
     return GetMaterialApp(
       defaultTransition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 500),
       theme: ThemeData(
-       // brightness: Brightness.light,
+        // brightness: Brightness.light,
         primaryColor: lBgColor,
         fontFamily: 'TiltWarp',
         outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            
-            textStyle: TextStyle(color: Colors.blueAccent, fontSize: 17, fontFamily: 'TiltWarp', fontWeight: FontWeight.w300)
-
-          )
-        ),
+            style: OutlinedButton.styleFrom(
+                textStyle: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 17,
+                    fontFamily: 'TiltWarp',
+                    fontWeight: FontWeight.w300))),
         elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: lSubTextColor,
-            textStyle: TextStyle( fontSize: 17, fontFamily: 'TiltWarp', fontWeight: FontWeight.w300)
-          )
-        ),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: lSubTextColor,
+                textStyle: TextStyle(
+                    fontSize: 17,
+                    fontFamily: 'TiltWarp',
+                    fontWeight: FontWeight.w300))),
         textTheme: TextTheme(
-          displayLarge: TextStyle(fontSize: 40, fontWeight: FontWeight.w500, color: lAccentColor),
+          displayLarge: TextStyle(
+              fontSize: 40, fontWeight: FontWeight.w500, color: lAccentColor),
           displayMedium: TextStyle(fontSize: 27, color: lSubTextColor),
-          bodySmall: TextStyle(fontSize: 20, color: lSubTextColor, fontWeight: FontWeight.w300),
+          bodySmall: TextStyle(
+              fontSize: 20, color: lSubTextColor, fontWeight: FontWeight.w300),
         ),
       ),
-      
       debugShowCheckedModeBanner: false,
-      
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
@@ -51,35 +54,34 @@ class MyApp extends StatelessWidget{
       },
     );
   }
-  
 }
 
 class methods {
-  void openPage(int i, BuildContext context){
-  switch(i){
-    case 0:
-    print('bottles page');
-    break;
-    case 1:
-    print('games page');
-    break;
-    case 2:
-    print('home page');
-    break;
-    case 3:
-    print('profile page');
-    break;
-    case 4:
-    print('settings page');
-    break;
+  void openPage(int i, BuildContext context) {
+    switch (i) {
+      case 0:
+        print('bottles page');
+        break;
+      case 1:
+        print('games page');
+        break;
+      case 2:
+        print('home page');
+        break;
+      case 3:
+        print('profile page');
+        break;
+      case 4:
+        print('settings page');
+        break;
+    }
+    switch (i) {
+      case 2: //home
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 3: //profile
+        Navigator.pushNamed(context, '/profile');
+        break;
+    }
   }
-  switch(i){
-    case 2: //home
-      Navigator.pushNamed(context, '/home');
-    break;
-    case 3: //profile
-      Navigator.pushNamed(context, '/profile');
-    break;
-  }
-}
 }
