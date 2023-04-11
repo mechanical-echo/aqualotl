@@ -10,11 +10,16 @@ import 'package:get/get.dart';
 import '../../../constants/image_strings.dart';
 import '../../../constants/strings.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     super.key,
   });
 
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     final cname = TextEditingController();
@@ -22,9 +27,74 @@ class LoginForm extends StatelessWidget {
     final cpassw = TextEditingController();
 
     final formKey = GlobalKey<FormState>();
+    void loginError(String code) {}
+
     void signUserIn() async {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: cemail.text, password: cpassw.text);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: cemail.text, password: cpassw.text);
+
+        Navigator.pop(context);
+      } on FirebaseAuthException catch (e) {
+        print("ERROR ERROR ERROR ERROR ERROR\n ${e.code}");
+        Navigator.pop(context);
+        String text = "Unknown error, please contact developers!";
+        switch (e.code) {
+          case 'user-not-found':
+            text =
+                "User not found :(\nMaybe there is an error in email or You haven't signed up yet.";
+            break;
+          case 'wrong-password':
+            text =
+                "Wrong password! :(\nCheck for mistakes in your password, otherwise, try clicking 'Forgot password'.";
+            break;
+          case 'invalid-email':
+            text =
+                "Invalid email :(\nLooks like email isn't correct. Probably some error with or after '@' ";
+            break;
+        }
+        print(text);
+
+        showDialog(
+          context: context,
+          builder: (context) {
+            print("i am inside");
+            return Center(
+              child: Container(
+                height: 160,
+                width: 350,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      text,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    TextButton(
+                      style: Theme.of(context).textButtonTheme.style,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Understood."),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+        print("done");
+      }
     }
 
     final height = MediaQuery.of(context).size.height;

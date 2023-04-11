@@ -12,7 +12,6 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'constants/colors.dart';
 import 'pages/authentication/signup/auth.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
