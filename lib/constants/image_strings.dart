@@ -12,4 +12,4 @@ const String bottleFront = 'assets/images/bottle_front.PNG';
 const String glass = 'assets/images/glass-of-water.png';
 const String cup = 'assets/images/glass-cup.png';
 const String measuring = 'assets/images/measuring-cup.png';
-const String edit = 'assets/image/writing.png';
+const String edit = 'assets/images/writing.png';
