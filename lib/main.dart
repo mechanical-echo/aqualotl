@@ -1,14 +1,23 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types, avoid_print
 
+import 'package:aqualotl/firebase_options.dart';
+import 'package:aqualotl/pages/authentication/authenticationRepository/authentication_repository.dart';
 import 'package:aqualotl/pages/authentication/splashscreen.dart';
 import 'package:aqualotl/pages/HomePage/homepage.dart';
 import 'package:aqualotl/pages/temp/profilepage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'constants/colors.dart';
+import 'pages/authentication/signup/auth.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -63,40 +72,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(),
+        '/': (context) => Auth(),
         '/home': (context) => HomePage(),
         '/profile': (context) => ProfilePage(),
       },
     );
-  }
-}
-
-class methods {
-  void openPage(int i, BuildContext context) {
-    switch (i) {
-      case 0:
-        print('bottles page');
-        break;
-      case 1:
-        print('games page');
-        break;
-      case 2:
-        print('home page');
-        break;
-      case 3:
-        print('profile page');
-        break;
-      case 4:
-        print('settings page');
-        break;
-    }
-    switch (i) {
-      case 2: //home
-        Navigator.pushNamed(context, '/home');
-        break;
-      case 3: //profile
-        Navigator.pushNamed(context, '/profile');
-        break;
-    }
   }
 }

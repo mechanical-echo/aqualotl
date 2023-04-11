@@ -1,9 +1,8 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api
+
 import 'package:aqualotl/constants/colors.dart';
 import 'package:aqualotl/constants/image_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-import 'package:water_bottle/water_bottle.dart';
-import 'Widgets/AddWaterDialog.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -13,11 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final plainBottleRef = GlobalKey<WaterBottleState>();
-  final sphereBottleRef = GlobalKey<SphericalBottleState>();
-  final triangleBottleRef = GlobalKey<TriangularBottleState>();
   var waterLevel = 0.5;
-  var selectedStyle = 0;
   int currentWaterLevel = 0;
   final maxWaterLevel = 2700;
   double progress = 0;
@@ -26,14 +21,11 @@ class _HomePageState extends State<HomePage> {
   void _incrementProgressValue(int howMuch) {
     setState(() {
       currentWaterLevel += howMuch;
-      print(currentWaterLevel.toString() + "/" + maxWaterLevel.toString());
-      print(currentWaterLevel / maxWaterLevel);
       _progressValue = (currentWaterLevel / maxWaterLevel);
       if (_progressValue > 1) {
         _progressValue = 1;
         currentWaterLevel = maxWaterLevel;
       }
-      print(_progressValue);
     });
   }
 
@@ -44,25 +36,25 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Enter a value'),
+          title: const Text('Enter a value'),
           content: TextFormField(
             onChanged: (value) {
               inputValue = value;
             },
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Enter a value to add',
             ),
           ),
           actions: [
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Add'),
+              child: const Text('Add'),
               onPressed: () {
                 int? valueToAdd = int.tryParse(inputValue);
                 _incrementProgressValue(valueToAdd!);
@@ -80,8 +72,8 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add'),
-          content: Text('Please, choose how much water must be added:'),
+          title: const Text('Add'),
+          content: const Text('Please, choose how much water must be added:'),
           actions: [
             Column(
               children: [
@@ -157,11 +149,11 @@ class _HomePageState extends State<HomePage> {
                       Column(
                         children: [
                           TextButton(
-                            child: Text('Cancel'),
                             style: Theme.of(context).textButtonTheme.style,
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
+                            child: const Text('Cancel'),
                           ),
                         ],
                       ),
@@ -203,8 +195,9 @@ class _HomePageState extends State<HomePage> {
             child: IconButton(
                 onPressed: () {
                   //ICON BUTTON ONPRESSED-----------------------------------
+                  Navigator.pushNamed(context, '/profile');
                 },
-                icon: const Icon(Icons.person_sharp)),
+                icon: const Icon(Icons.person_sharp, color: Colors.black)),
           )
         ],
       ),
@@ -219,7 +212,7 @@ class _HomePageState extends State<HomePage> {
               height: 40,
             ),
             /**
-             * Welcome box and Bottle
+             * Welcome box and Circle
              */
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -227,7 +220,11 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   WelcomeBox(phoneW: phoneW, phoneH: phoneH),
                   const Divider15(),
-                  ProgressCircle(phoneH: phoneH, progress: _progressValue),
+                  ProgressCircle(
+                      phoneH: phoneH,
+                      progress: _progressValue,
+                      max: maxWaterLevel,
+                      current: currentWaterLevel),
                 ],
               ),
             ),
@@ -382,8 +379,11 @@ class ProgressCircle extends StatelessWidget {
     super.key,
     required this.phoneH,
     required this.progress,
+    required this.current,
+    required this.max,
   });
-
+  final int current;
+  final int max;
   final double phoneH;
   final double progress;
 
@@ -407,9 +407,21 @@ class ProgressCircle extends StatelessWidget {
                 strokeWidth: 15,
               ),
               Center(
-                child: Text(
-                  ((progress * 100).toStringAsFixed(0) + "%"),
-                  style: Theme.of(context).textTheme.displayLarge,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        ((progress * 100).toStringAsFixed(0) + "%"),
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
+                      Text(
+                        current.toString() + "/" + max.toString() + "ml",
+                        style: Theme.of(context).textTheme.bodySmall,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
