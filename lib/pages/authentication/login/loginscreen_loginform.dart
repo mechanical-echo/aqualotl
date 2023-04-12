@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:aqualotl/constants/colors.dart';
-import 'package:aqualotl/pages/HomePage/homepage.dart';
 import 'package:aqualotl/pages/forgot%20password/OTP.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +19,11 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final cemail = TextEditingController();
+  final cpassw = TextEditingController();
+  bool _visible = true;
   @override
   Widget build(BuildContext context) {
-    final cname = TextEditingController();
-    final cemail = TextEditingController();
-    final cpassw = TextEditingController();
-
-    final formKey = GlobalKey<FormState>();
-    void loginError(String code) {}
-
     void signUserIn() async {
       showDialog(
         context: context,
@@ -39,7 +34,8 @@ class _LoginFormState extends State<LoginForm> {
       try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: cemail.text, password: cpassw.text);
-
+        print("AFTER LOGIN AFTER LOGIN AFTER LOGIN");
+        Navigator.pop(context);
         Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
         print("ERROR ERROR ERROR ERROR ERROR\n ${e.code}");
@@ -58,6 +54,8 @@ class _LoginFormState extends State<LoginForm> {
             text =
                 "Invalid email :(\nLooks like email isn't correct. Probably some error with or after '@' ";
             break;
+          default:
+            text = e.code;
         }
         print(text);
 
@@ -73,21 +71,26 @@ class _LoginFormState extends State<LoginForm> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      text,
-                      style: Theme.of(context).textTheme.bodySmall,
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          text,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        TextButton(
+                          style: Theme.of(context).textButtonTheme.style,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Understood."),
+                        ),
+                      ],
                     ),
-                    TextButton(
-                      style: Theme.of(context).textButtonTheme.style,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text("Understood."),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             );
@@ -118,19 +121,28 @@ class _LoginFormState extends State<LoginForm> {
           ),
           SizedBox(height: 30),
           TextFormField(
+            obscureText: _visible,
             controller: cpassw,
             decoration: InputDecoration(
-                prefixIcon: Icon(Icons.fingerprint_sharp),
-                labelText: "Password",
-                hintText: "Password",
-                border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  onPressed: null,
-                  icon: Icon(Icons.remove_red_eye_sharp),
-                ),
-                labelStyle: TextStyle(color: lSubTextColor),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2.0, color: lSubTextColor))),
+              prefixIcon: Icon(Icons.fingerprint_sharp),
+              labelText: "Password",
+              hintText: "Password",
+              border: OutlineInputBorder(),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _visible = !_visible;
+                  });
+                },
+                icon: _visible
+                    ? Icon(Icons.visibility)
+                    : Icon(Icons.visibility_off),
+              ),
+              labelStyle: TextStyle(color: lSubTextColor),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 2.0, color: lSubTextColor),
+              ),
+            ),
           ),
           const SizedBox(height: 10),
           Align(
@@ -201,7 +213,7 @@ class _LoginFormState extends State<LoginForm> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                // Get.to(HomePage());
+                print("BEFORE LOGIN BEFORE LOGIN BEFORE LOGIN");
                 signUserIn();
                 // Navigator.pushReplacementNamed(context, '/home');
               },
