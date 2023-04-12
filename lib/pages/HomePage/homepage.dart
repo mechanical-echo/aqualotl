@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
+import 'dart:async';
+
 import 'package:aqualotl/constants/colors.dart';
 import 'package:aqualotl/constants/image_strings.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +16,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var waterLevel = 0.5;
   int currentWaterLevel = 0;
-  final maxWaterLevel = 2700;
+  var maxWaterLevel = 2700;
   double progress = 0;
   double _progressValue = 0.0;
+  String dropdownValue = 'every 30 minutes';
+
+  final numberController = TextEditingController();
 
   void _incrementProgressValue(int howMuch) {
     setState(() {
@@ -176,6 +181,63 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void openWaterLevelDialog() {
+    showDialog(
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text(
+                  "Please, write how much water you are planning to drink every day:",
+                  style: Theme.of(context).textTheme.bodySmall),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Enter volume:",
+                            style: Theme.of(context).textTheme.bodySmall),
+                        TextFormField(
+                          controller: numberController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            icon: const Icon(
+                              Icons.water_drop,
+                            ),
+                          ),
+                          validator: (val) {
+                            if (val!.isEmpty) {
+                              return 'Please enter a number';
+                            }
+                            final n = num.tryParse(val);
+                            if (n == null) {
+                              return 'Please enter a valid number';
+                            }
+                            if (n <= 0) {
+                              return 'Please enter a number greater than 0';
+                            }
+                            return null;
+                          },
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              maxWaterLevel = int.parse(numberController.text);
+                              Navigator.pop(context);
+                            });
+                          },
+                          style: Theme.of(context).elevatedButtonTheme.style,
+                          child: const Text("Save"),
+                        ),
+                      ]),
+                )
+              ]);
+        },
+        context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final phoneW = MediaQuery.of(context).size.width;
@@ -201,10 +263,7 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.white,
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -220,22 +279,76 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   WelcomeBox(phoneW: phoneW, phoneH: phoneH),
                   const Divider15(),
-                  ProgressCircle(
-                      phoneH: phoneH,
-                      progress: _progressValue,
-                      max: maxWaterLevel,
-                      current: currentWaterLevel),
+                  SizedBox(
+                    width: phoneH * 0.22,
+                    height: phoneH * 0.22,
+                    child: Stack(fit: StackFit.expand, children: [
+                      ProgressCircle(
+                          phoneH: phoneH,
+                          progress: _progressValue,
+                          max: maxWaterLevel,
+                          current: currentWaterLevel),
+                      IconButton(
+                        alignment: Alignment.bottomRight,
+                        onPressed: () {
+                          openWaterLevelDialog();
+                        },
+                        icon: Icon(Icons.settings),
+                        color: Colors.grey.shade700,
+                      ),
+                    ]),
+                  ),
                 ],
               ),
             ),
             const Divider15Vertical(),
             /**
-             * TIP OF THE DAY AND BUTTON
+             * HOW MANY TIMES TO REMIND AND BUTTON
              */
             Row(
               children: [
                 const Divider25(),
-                const TipOfTheDay(),
+                Container(
+                  width: 200,
+                  height: 140,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "REMINDERS:",
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      DropdownButton<String>(
+                        value: dropdownValue,
+                        items: <String>[
+                          'every 1 minute (test)',
+                          'every 30 minutes',
+                          'every 1 hour',
+                          'every 2 hours'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            dropdownValue = value!;
+                          });
+                        },
+                      ),
+                      ElevatedButton(
+                          onPressed: () {}, child: Text("test notification"))
+                    ],
+                  ),
+                ),
                 const Divider15(),
                 Container(
                   width: MediaQuery.of(context).size.width - 50 - 200 - 15,
@@ -318,36 +431,6 @@ class FooterImage extends StatelessWidget {
   }
 }
 
-class TipOfTheDay extends StatelessWidget {
-  const TipOfTheDay({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: 140,
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            "TIP OF THE DAY:",
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class Divider25 extends StatelessWidget {
   const Divider25({
     super.key,
@@ -394,19 +477,22 @@ class ProgressCircle extends StatelessWidget {
       height: phoneH * 0.22,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10), color: Colors.grey.shade200),
-      child: Padding(
-        padding: const EdgeInsets.all(25),
-        child: SizedBox(
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              CircularProgressIndicator(
+      child: SizedBox(
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: CircularProgressIndicator(
                 value: progress,
                 backgroundColor: Colors.grey,
                 color: lAccentColor,
                 strokeWidth: 15,
               ),
-              Center(
+            ),
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Center(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Column(
@@ -424,8 +510,8 @@ class ProgressCircle extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
