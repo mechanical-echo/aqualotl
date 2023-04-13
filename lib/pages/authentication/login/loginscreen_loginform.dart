@@ -119,7 +119,7 @@ class _LoginFormState extends State<LoginForm> {
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(width: 2.0, color: lSubTextColor))),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 10),
           TextFormField(
             obscureText: _visible,
             controller: cpassw,

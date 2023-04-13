@@ -36,6 +36,7 @@ class SignupPage extends StatelessWidget {
         child: Column(
           // ignore: prefer_const_literals_to_create_immutables
           children: [
+            const SizedBox(height: 80),
             // ignore: prefer_const_constructors
             FormHeaderWidget(
               image: splash,
@@ -49,7 +50,10 @@ class SignupPage extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
-                    onPressed: () => AuthService().signInWithGoogle(),
+                    onPressed: () {
+                      AuthService().signInWithGoogle();
+                      Navigator.pop(context);
+                    },
                     icon: Image(
                       image: const AssetImage(GoogleLogo),
                       height: MediaQuery.of(context).size.height * 0.05,

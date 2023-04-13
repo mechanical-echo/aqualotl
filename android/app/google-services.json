@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "298643738807-rplu84or742a8vi22r3kuqn4fkqc3ad1.apps.googleusercontent.com",
+          "client_id": "298643738807-lnfcb74vqqtr0h592h9he5dj0qpqpeo7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mechanical.aqualotl",
+            "certificate_hash": "017bb5b973c5e24f266e3f3edf47641f986a4874"
+          }
+        },
+        {
+          "client_id": "298643738807-6jn2lfq9i04d3fphh55u2391sl27dl1j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "298643738807-rplu84or742a8vi22r3kuqn4fkqc3ad1.apps.googleusercontent.com",
+              "client_id": "298643738807-6jn2lfq9i04d3fphh55u2391sl27dl1j.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "298643738807-j6taoqasj3koi7ii760j87794qgr9mn1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.aqualotl"
+              }
             }
           ]
         }
