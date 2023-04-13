@@ -1,13 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:aqualotl/constants/colors.dart';
-import 'package:aqualotl/pages/HomePage/homepage.dart';
-import 'package:aqualotl/pages/forgot%20password/OTP.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../../constants/image_strings.dart';
 import '../../../constants/strings.dart';
 
 class SignupFormWidget extends StatefulWidget {
@@ -38,7 +34,6 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
       Navigator.pop(context);
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
-      print("ERROR ERROR ERROR ERROR ERROR\n ${e.code}");
       Navigator.pop(context);
       String text = "Unknown error, please contact developers!";
       switch (e.code) {
@@ -57,12 +52,10 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
         default:
           text = e.code;
       }
-      print(text);
 
       showDialog(
         context: context,
         builder: (context) {
-          print("i am inside");
           return Center(
             child: Container(
               height: 160,
@@ -86,7 +79,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text("Understood."),
+                        child: const Text("Understood."),
                       ),
                     ],
                   ),
@@ -96,7 +89,6 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
           );
         },
       );
-      print("done");
     }
   }
 
@@ -104,11 +96,11 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
   Widget build(BuildContext context) {
     return Form(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0),
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           TextFormField(
             controller: cemail,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.person_outline_outlined),
                 labelText: "Email",
                 hintText: "Email",
@@ -119,15 +111,15 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(width: 2.0, color: lSubTextColor))),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           TextFormField(
             obscureText: _visible,
             controller: cpassw,
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.fingerprint_sharp),
+              prefixIcon: const Icon(Icons.fingerprint_sharp),
               labelText: "Password",
               hintText: "Password",
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               suffixIcon: IconButton(
                 onPressed: () {
                   setState(() {
@@ -135,11 +127,11 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                   });
                 },
                 icon: _visible
-                    ? Icon(Icons.visibility)
-                    : Icon(Icons.visibility_off),
+                    ? const Icon(Icons.visibility)
+                    : const Icon(Icons.visibility_off),
               ),
-              labelStyle: TextStyle(color: lSubTextColor),
-              focusedBorder: OutlineInputBorder(
+              labelStyle: const TextStyle(color: lSubTextColor),
+              focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(width: 2.0, color: lSubTextColor),
               ),
             ),
@@ -181,7 +173,7 @@ class ForgetPasswordButtonWidget extends StatelessWidget {
               Icons.mail_outline_rounded,
               size: 60,
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Column(

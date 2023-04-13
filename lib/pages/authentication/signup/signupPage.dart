@@ -7,25 +7,11 @@ import '../auth_service.dart';
 import '../login/loginscreen.dart';
 import '../../../constants/image_strings.dart';
 import '../login/FormHeaderWidget.dart';
-import 'SignupFormWidget.dart';
+import 'signup_from_widget.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class SignupPage extends StatelessWidget {
-  SignupPage({Key? key}) : super(key: key);
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
-  );
-  Future<void> _handleSignIn() async {
-    try {
-      await _googleSignIn.signIn();
-    } catch (error) {
-      print(error);
-    }
-  }
+  const SignupPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +50,7 @@ class SignupPage extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
-                      Get.to(LoginScreen());
+                      Get.to(const LoginScreen());
                     },
                     child: Text.rich(TextSpan(children: [
                       TextSpan(

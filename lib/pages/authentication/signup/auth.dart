@@ -12,7 +12,6 @@ class Auth extends StatelessWidget {
         body: StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        print("GOT DATA == ${snapshot.hasData}");
         if (snapshot.hasData) {
           return HomePage();
         } else {

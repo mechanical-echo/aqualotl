@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, library_private_types_in_public_api
 
-import 'dart:async';
-
 import 'package:aqualotl/constants/colors.dart';
 import 'package:aqualotl/constants/image_strings.dart';
 import 'package:flutter/material.dart';
@@ -252,14 +250,12 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: [
-          Container(
-            child: IconButton(
-                onPressed: () {
-                  //ICON BUTTON ONPRESSED-----------------------------------
-                  Navigator.pushNamed(context, '/profile');
-                },
-                icon: const Icon(Icons.person_sharp, color: Colors.black)),
-          )
+          IconButton(
+              onPressed: () {
+                //ICON BUTTON ONPRESSED-----------------------------------
+                Navigator.pushNamed(context, '/profile');
+              },
+              icon: const Icon(Icons.person_sharp, color: Colors.black)),
         ],
       ),
       body: SingleChildScrollView(
@@ -292,7 +288,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () {
                           openWaterLevelDialog();
                         },
-                        icon: Icon(Icons.settings),
+                        icon: const Icon(Icons.settings),
                         color: Colors.grey.shade700,
                       ),
                     ]),
@@ -344,7 +340,8 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       ElevatedButton(
-                          onPressed: () {}, child: Text("test notification"))
+                          onPressed: () {},
+                          child: const Text("test notification"))
                     ],
                   ),
                 ),
@@ -357,7 +354,8 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.grey.shade200,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -498,11 +496,11 @@ class ProgressCircle extends StatelessWidget {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        ((progress * 100).toStringAsFixed(0) + "%"),
+                        ("${(progress * 100).toStringAsFixed(0)}%"),
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
                       Text(
-                        current.toString() + "/" + max.toString() + "ml",
+                        "$current/${max}ml",
                         style: Theme.of(context).textTheme.bodySmall,
                       )
                     ],

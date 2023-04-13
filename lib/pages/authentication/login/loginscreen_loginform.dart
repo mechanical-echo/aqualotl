@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:aqualotl/constants/colors.dart';
 import 'package:aqualotl/pages/forgot%20password/OTP.dart';
@@ -34,11 +34,9 @@ class _LoginFormState extends State<LoginForm> {
       try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: cemail.text, password: cpassw.text);
-        print("AFTER LOGIN AFTER LOGIN AFTER LOGIN");
         Navigator.pop(context);
         Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
-        print("ERROR ERROR ERROR ERROR ERROR\n ${e.code}");
         Navigator.pop(context);
         String text = "Unknown error, please contact developers!";
         switch (e.code) {
@@ -57,12 +55,10 @@ class _LoginFormState extends State<LoginForm> {
           default:
             text = e.code;
         }
-        print(text);
 
         showDialog(
           context: context,
           builder: (context) {
-            print("i am inside");
             return Center(
               child: Container(
                 height: 160,
@@ -96,7 +92,6 @@ class _LoginFormState extends State<LoginForm> {
             );
           },
         );
-        print("done");
       }
     }
 
@@ -213,7 +208,6 @@ class _LoginFormState extends State<LoginForm> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                print("BEFORE LOGIN BEFORE LOGIN BEFORE LOGIN");
                 signUserIn();
                 // Navigator.pushReplacementNamed(context, '/home');
               },
