@@ -24,6 +24,7 @@ dependencies:
   sleek_circular_slider: ^2.0.1
   water_bottle: ^0.0.7
   firebase_auth: ^4.4.0
+  google_sign_in: ^6.1.0
 
 dev_dependencies:
   flutter_test:

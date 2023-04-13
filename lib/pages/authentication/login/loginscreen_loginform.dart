@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:aqualotl/constants/colors.dart';
-import 'package:aqualotl/pages/HomePage/homepage.dart';
 import 'package:aqualotl/pages/forgot%20password/OTP.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,21 +9,95 @@ import 'package:get/get.dart';
 import '../../../constants/image_strings.dart';
 import '../../../constants/strings.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final cname = TextEditingController();
-    final cemail = TextEditingController();
-    final cpassw = TextEditingController();
+  State<LoginForm> createState() => _LoginFormState();
+}
 
-    final formKey = GlobalKey<FormState>();
+class _LoginFormState extends State<LoginForm> {
+  final cemail = TextEditingController();
+  final cpassw = TextEditingController();
+  bool _visible = true;
+  @override
+  Widget build(BuildContext context) {
     void signUserIn() async {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: cemail.text, password: cpassw.text);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: cemail.text, password: cpassw.text);
+        print("AFTER LOGIN AFTER LOGIN AFTER LOGIN");
+        Navigator.pop(context);
+        Navigator.pop(context);
+      } on FirebaseAuthException catch (e) {
+        print("ERROR ERROR ERROR ERROR ERROR\n ${e.code}");
+        Navigator.pop(context);
+        String text = "Unknown error, please contact developers!";
+        switch (e.code) {
+          case 'user-not-found':
+            text =
+                "User not found :(\nMaybe there is an error in email or You haven't signed up yet.";
+            break;
+          case 'wrong-password':
+            text =
+                "Wrong password! :(\nCheck for mistakes in your password, otherwise, try clicking 'Forgot password'.";
+            break;
+          case 'invalid-email':
+            text =
+                "Invalid email :(\nLooks like email isn't correct. Probably some error with or after '@' ";
+            break;
+          default:
+            text = e.code;
+        }
+        print(text);
+
+        showDialog(
+          context: context,
+          builder: (context) {
+            print("i am inside");
+            return Center(
+              child: Container(
+                height: 160,
+                width: 350,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          text,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        TextButton(
+                          style: Theme.of(context).textButtonTheme.style,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Understood."),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+        print("done");
+      }
     }
 
     final height = MediaQuery.of(context).size.height;
@@ -48,19 +121,28 @@ class LoginForm extends StatelessWidget {
           ),
           SizedBox(height: 30),
           TextFormField(
+            obscureText: _visible,
             controller: cpassw,
             decoration: InputDecoration(
-                prefixIcon: Icon(Icons.fingerprint_sharp),
-                labelText: "Password",
-                hintText: "Password",
-                border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  onPressed: null,
-                  icon: Icon(Icons.remove_red_eye_sharp),
-                ),
-                labelStyle: TextStyle(color: lSubTextColor),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2.0, color: lSubTextColor))),
+              prefixIcon: Icon(Icons.fingerprint_sharp),
+              labelText: "Password",
+              hintText: "Password",
+              border: OutlineInputBorder(),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _visible = !_visible;
+                  });
+                },
+                icon: _visible
+                    ? Icon(Icons.visibility)
+                    : Icon(Icons.visibility_off),
+              ),
+              labelStyle: TextStyle(color: lSubTextColor),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 2.0, color: lSubTextColor),
+              ),
+            ),
           ),
           const SizedBox(height: 10),
           Align(
@@ -131,7 +213,7 @@ class LoginForm extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                // Get.to(HomePage());
+                print("BEFORE LOGIN BEFORE LOGIN BEFORE LOGIN");
                 signUserIn();
                 // Navigator.pushReplacementNamed(context, '/home');
               },

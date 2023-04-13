@@ -14,7 +14,7 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent, 
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(

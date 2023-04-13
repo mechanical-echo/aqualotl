@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types, avoid_print
 
 import 'package:aqualotl/firebase_options.dart';
-import 'package:aqualotl/pages/authentication/authenticationRepository/authentication_repository.dart';
-import 'package:aqualotl/pages/authentication/splashscreen.dart';
 import 'package:aqualotl/pages/HomePage/homepage.dart';
 import 'package:aqualotl/pages/temp/profilepage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'constants/colors.dart';
-import 'pages/authentication/signup/auth.dart';
+import '../../constants/colors.dart';
+import '../pages/authentication/signup/auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

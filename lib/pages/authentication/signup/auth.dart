@@ -1,5 +1,5 @@
 import 'package:aqualotl/pages/HomePage/homepage.dart';
-import 'package:aqualotl/pages/authentication/login/loginscreen.dart';
+import 'package:aqualotl/pages/authentication/welcomescreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class Auth extends StatelessWidget {
         if (snapshot.hasData) {
           return HomePage();
         } else {
-          return const LoginScreen();
+          return const WelcomeScreen();
         }
       },
     ));
